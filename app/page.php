@@ -1,6 +1,7 @@
 <?php
-
-if(isset($chunnel))die('error');
+if (!defined('ROOT')) {
+    die('error');
+}
 
 class page
 {
@@ -24,6 +25,10 @@ class page
         $this->redis = new Redis();
         $this->redis->connect(REDIS_CACHE_HOST, REDIS_CACHE_PORT, 300);
         $this->redis_status = $this->redis->ping();
+    }
 
+    public function __call($name, $arguments)
+    {
+        G::code_die(404, '无效的路径');
     }
 }
